@@ -1,153 +1,115 @@
-/**index.wxss**/
-
-page {
-  background: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.userinfo, .uploader, .tunnel {
-  margin-top: 40rpx;
-  height: 140rpx;
-  width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: none;
-  border-right: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  transition: all 300ms ease;
-}
-
-.userinfo {
-  padding-left: 120rpx;
-}
-
-.userinfo-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-  background-size: cover;
-  background-color: white;
-}
-
-.userinfo-avatar[size] {
-  width: 100rpx;
-}
-
-
-.userinfo-avatar:after {
-  border: none;
-}
-
-.userinfo-nickname {
-  font-size: 32rpx;
-  color: #007aff;
-  background-color: white;
-  background-size: cover;
-  text-align: left;
-  padding-left: 0;
-  margin-left: 10px;
-}
-
-.userinfo-nickname::after {
-  border: none;
-}
-
-.userinfo-nickname-wrapper {
-  flex: 1;
-}
-
-.uploader, .tunnel {
-  height: auto;
-  padding: 0 0 0 40rpx;
-  flex-direction: column;
-  align-items: flex-start;
+.container {
+  background: #eee;
   box-sizing: border-box;
 }
-
-.uploader-text, .tunnel-text {
-  width: 100%;
-  line-height: 52px;
-  font-size: 34rpx;
-  color: #007aff;
-}
-
-.uploader-container {
-  width: 100%;
-  height: 400rpx;
-  padding: 20rpx 20rpx 20rpx 0;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.uploader-image {
-  width: 100%;
-  height: 360rpx;
-}
-
-.tunnel {
-  padding: 0 0 0 40rpx;
-}
-
-.tunnel-text {
+.app-title {
   position: relative;
-  color: #222;
+  width: 100%;
+  height: 200px;
+}
+.app-title .main-title {
+  position: absolute;
+  top: 35px;
+  left: 20px;
+  padding: 0 5px;
+  height: 60px;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 60px;
+  color: white;
+}
+.app-title .sub-title {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 40px;
+  vertical-align: middle;
+  color: white;
+}
+.app-title .time-stamp {
+  height: 25px;
+  padding: 0 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  font-size: 14px;
+  line-height: 25px;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 25px 25px;
+}
+.card {
+  width: 100%;
+  margin-top: 10px;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow:  0px 5px 5px -5px #bbb,
+               0px -5px 5px -5px #bbb;
+}
+.card .card-title {
+  width: 100%;
+  height: 40px;
+  padding: 5px 0 5px 10px;
+  font-size: 20px;
+  line-height: 40px;
+  vertical-align: middle;
+  border-bottom: 2px solid #f0f0f0; 
+}
+.card .card-title::before {
+  content: "1";
+  width: 3px;
+  height: 40px;
+  margin-right: 10px;
+  color: #4169e2;
+  background: #4169e2;
+}
+.total-summary .total-summary-number {
+  margin: 0 5px;
   display: flex;
   flex-direction: row;
-  align-content: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
 }
-
-.tunnel-text:first-child {
-  border-top: none;
+.total-summary .total-summary-number .summary-item {
+  flex: 1;
+  margin: 5px 0 10px 0; 
 }
-
-.tunnel-switch {
-  position: absolute;
-  right: 20rpx;
-  top: -2rpx;
+.total-summary .total-summary-number .summary-item .item-number {
+  height: 50px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 50px;
 }
-
-.disable {
-  color: #888;
+.total-summary .total-summary-number .summary-item .item-title {
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
 }
-
-.service {
-  position: fixed;
-  right: 40rpx;
-  bottom: 40rpx;
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 50%;
-  background: linear-gradient(#007aff, #0063ce);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  transition: all 300ms ease;
+.total-summary .total-summary-desc {
+  padding: 10px 15px;
+  line-height: 1.8;
 }
-
-.service-button {
-  position: absolute;
-  top: 40rpx;
+.total-summary .total-summary-desc .total-summary-desc-item::before {
+  content: "\2726";
+  font-size: 12px;
+  color: red;
 }
-
-.service:active {
-  box-shadow: none;
+.card .double-linechart {
+  width: 100%;
+  height: 600px;
 }
-
-.request-text {
-  padding: 20rpx 0;
-  font-size: 24rpx;
-  line-height: 36rpx;
-  word-break: break-all;
+.card .single-linechart {
+  width: 100%;
+  height: 350px;
+}
+.footer {
+  margin: 10px 0;
+  font-size: 12px;
+  color: #777;
 }
