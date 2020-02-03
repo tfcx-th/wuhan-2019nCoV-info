@@ -1,5 +1,7 @@
 //index.js
-import * as echarts from '../../components/ec-canvas/echarts';
+import * as echarts from '../../components/ec-canvas/echarts'
+import china from '../../components/ec-canvas/china.js'
+import world from '../../components/ec-canvas/world.js'
 
 const app = getApp()
 
@@ -15,6 +17,10 @@ Page({
     deathtotal: 0,
     // 治愈
     curetotal: 0,
+    // 全国疫情地图
+    totalMapChart: {
+      lazyLoad: true
+    },
     // 全国累计趋势图（确诊+疑似+死亡+治愈）
     totalLineChart: {
       lazyLoad: true
@@ -26,13 +32,19 @@ Page({
     // 武汉累计趋势图（确诊+死亡+治愈）
     wuhanLineChart: {
       lazyLoad: true
-    }
+    },
+    // 世界疫情地图
+    worldMapChart: {
+      lazyLoad: true
+    },
   },
 
   onLoad: function() {
+    this.totalMapComponent = this.selectComponent('#total-map')
     this.totalLineComponent = this.selectComponent('#total-line')
     this.addLineComponent = this.selectComponent('#add-line')
     this.wuhanLineComponent = this.selectComponent('#wuhan-line')
+    this.worldMapComponent = this.selectComponent('#world-map')
     wx.request({
       url: 'https://interface.sina.cn/news/wap/fymap2020_data.d.json?callback=a',
       success: res => {
@@ -45,10 +57,34 @@ Page({
           deathtotal: data.deathtotal,
           curetotal: data.curetotal
         })
+        this._initTotalMapChart(data.list)
         this._initTotalLineChart(data.historylist)
         this._initAddLineChart(data.historylist)
         this._initWuhanLineChart(data.historylist)
+        this._initWorldMapChart(data.worldlist)
       }
+    })
+  },
+
+  _initTotalMapChart: function (data) {
+    this.totalMapComponent.init((canvas, width, height) => {
+      const mapChart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+      })
+
+      mapChart.setOption(this._getTotalMapOption(data));
+    })
+  },
+
+  _initWorldMapChart: function (data) {
+    this.worldMapComponent.init((canvas, width, height) => {
+      const mapChart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+      })
+
+      mapChart.setOption(this._getWorldMapOption(data));
     })
   },
 
@@ -80,6 +116,82 @@ Page({
       })
       lineChart.setOption(this._getWuhanLineOption(data));
     })
+  },
+
+  _getTotalMapOption: function (data) {
+    const _option = {
+      visualMap: {
+        left: 'left',
+        itemWidth: 16,
+        itemHeight: 10,
+        textGap: 8,
+        itemGap: 8,
+        pieces: [
+          { min: 0, max: 0, label: '0', color: 'rgb(242, 242, 242)' },
+          { min: 1, max: 9, label: '1-9', color: 'rgb(250, 234, 201)'},
+          { min: 10, max: 99, label: '10-99', color: 'rgb(237, 151, 122)' },
+          { min: 100, max: 499, label: '100-499', color: 'rgb(216, 78, 66)' },
+          { min: 500, max: 1000, label: '500-1000', color: 'rgb(187, 27, 37)' },
+          { min: 1001, label: '>1000', color: 'rgb(98, 12, 21)'}
+        ]
+      },
+      series: [{
+        name: 'map',
+        type: 'map',
+        roam: true,
+        map: 'china',
+        label: {
+          show: true,
+          fontSize: 10
+        },
+        data: []
+      }]
+    }
+    data.forEach(list => {
+      _option.series[0].data.push({
+        name: list.name,
+        value: list.value
+      })
+    })
+    return _option
+  },
+
+  _getWorldMapOption: function (data) {
+    const _option = {
+      visualMap: {
+        left: 'left',
+        itemWidth: 16,
+        itemHeight: 10,
+        textGap: 8,
+        itemGap: 8,
+        pieces: [
+          { min: 0, max: 0, label: '0', color: 'rgb(242, 242, 242)' },
+          { min: 1, max: 9, label: '1-9', color: 'rgb(250, 234, 201)' },
+          { min: 10, max: 99, label: '10-99', color: 'rgb(237, 151, 122)' },
+          { min: 100, max: 499, label: '100-499', color: 'rgb(216, 78, 66)' },
+          { min: 500, max: 1000, label: '500-1000', color: 'rgb(187, 27, 37)' },
+          { min: 1001, label: '>1000', color: 'rgb(98, 12, 21)' }
+        ]
+      },
+      series: [{
+        name: 'map',
+        type: 'map',
+        roam: true,
+        map: 'world',
+        label: {
+          show: false,
+          fontSize: 10
+        },
+        data: []
+      }]
+    }
+    data.forEach(list => {
+      _option.series[0].data.push({
+        name: list.name,
+        value: list.value
+      })
+    })
+    return _option
   },
 
   _getTotalLineOption: function (data) {
