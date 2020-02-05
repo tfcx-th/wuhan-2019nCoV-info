@@ -408,12 +408,14 @@ Page({
         name: '确诊',
         itemStyle: { color: 'rgb(247, 76, 49)' },
         showSymbol: true,
+        smooth: true,
         data: []
       }, {
         type: 'line',
         name: '疑似',
         itemStyle: { color: 'rgb(247, 130, 7)' },
         showSymbol: true,
+        smooth: true,
         data: []
       }]
     }
@@ -421,7 +423,7 @@ Page({
     for (let i = len - 1; i > 0; i--) {
       _option.xAxis.data.push(data[i - 1].date)
       _option.series[0].data.push(data[i - 1].cn_conNum - data[i].cn_conNum)
-      _option.series[1].data.push(data[i - 1].cn_susNum - data[i].cn_susNum)
+      _option.series[1].data.push(data[i].wjw_susNum)
     }
     return _option
   },
