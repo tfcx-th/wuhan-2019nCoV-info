@@ -47,6 +47,13 @@
     </view>
   </view>
 
+  <view class="card china-total-map">
+    <view class="card-title">全国疫情地图</view>
+    <view class="total-map single-map">
+      <ec-canvas id="total-map" ec="{{ totalMapChart }}"></ec-canvas>
+    </view>
+  </view>
+
   <view class="card china-total-line">
     <view class="card-title">全国疫情累计趋势</view>
     <view class="total-line double-linechart">
@@ -65,6 +72,13 @@
     <view class="card-title">武汉疫情累计趋势</view>
     <view class="wuhan-line single-linechart">
       <ec-canvas id="wuhan-line" ec="{{ wuhanLineChart }}"></ec-canvas>
+    </view>
+  </view>
+
+  <view class="card world-total-map">
+    <view class="card-title">世界疫情地图</view>
+    <view class="world-map single-map">
+      <ec-canvas id="world-map" ec="{{ worldMapChart }}"></ec-canvas>
     </view>
   </view>
 
